@@ -36,6 +36,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
 
+flutter_assets:
+  assets_path: assets/images
+  output_path: lib/utils
+  filename: app_images.dart
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -74,10 +79,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Montserrat-Italic-VariableFont_wght
+      fonts:
+        - asset: assets/fonts/Montserrat-Italic-VariableFont_wght.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
