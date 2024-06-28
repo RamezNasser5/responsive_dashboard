@@ -3,9 +3,14 @@ import 'package:responsive_dashboard/models/payment_card_model.dart';
 import 'package:responsive_dashboard/utils/app_images.dart';
 import 'package:responsive_dashboard/widget/payment_card.dart';
 
-class PaymentCards extends StatelessWidget {
+class PaymentCards extends StatefulWidget {
   const PaymentCards({super.key});
 
+  @override
+  State<PaymentCards> createState() => _PaymentCardsState();
+}
+
+class _PaymentCardsState extends State<PaymentCards> {
   final List<PaymentCardModel> paymentCards = const [
     PaymentCardModel(
       image: Assets.assetsImagesBalance,
@@ -27,19 +32,49 @@ class PaymentCards extends StatelessWidget {
     ),
   ];
 
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 300,
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        itemCount: paymentCards.length,
-        itemBuilder: (context, index) => PaymentCard(
-          paymentCardModel: paymentCards[index],
-        ),
-      ),
+    return Row(
+      children: paymentCards.asMap().entries.map((e) {
+        int index = e.key;
+        PaymentCardModel paymentCardModel = e.value;
+        if (index == 1) {
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: GestureDetector(
+                  onTap: () {
+                    if (index != currentIndex) {
+                      setState(() {
+                        currentIndex = index;
+                      });
+                    }
+                  },
+                  child: PaymentCard(
+                    paymentCardModel: paymentCardModel,
+                    isActive: index == currentIndex,
+                  )),
+            ),
+          );
+        } else {
+          return Expanded(
+              child: GestureDetector(
+            onTap: () {
+              if (index != currentIndex) {
+                setState(() {
+                  currentIndex = index;
+                });
+              }
+            },
+            child: PaymentCard(
+              paymentCardModel: paymentCardModel,
+              isActive: index == currentIndex,
+            ),
+          ));
+        }
+      }).toList(),
     );
   }
 }
